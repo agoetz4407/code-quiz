@@ -5,8 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Code Quiz</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    
+    <header>
+        <a href="highscores.html">View High Scores</a>
+        <div>Time Left: <span id="timer"></span></div>
+    </header>
+    <main id="content-wrapper" class="content-wrapper text-center">
+        <h1 id ="question" class="question">JavaScript Coding Quiz Challenge</h1>
+        <div id="answers" class="answers">
+            Welcome! Got a selection of good questions about JavaScript for you. Answer them within the time limit. Incorrect answers will cost you 15 seconds from your time, which is also your score. Good luck!
+        </div>
+        <footer id="footer"><button type="submit">Start Quiz</button></footer>
+    </main>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
