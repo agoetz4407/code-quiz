@@ -65,23 +65,28 @@ var questionArr = [
 
 //functions
 
-var saveScores = function() {
-
+var reloadQuiz = function() {
+    location.reload();
 };
 
 var submitInitials = function(event) {
     event.preventDefault();
     var initials = document.querySelector("input[name='initials']").value;
+    if (!initials) {
+        alert("Please enter your initials to submit your score.");
+        return;
+    }
     var score = time;
     var highScores = localStorage.getItem("JSQuizHighScores");
     if (!highScores) {
-        localStorage.setItem("JSQuizHighScores", JSON.stringify({initials: [initials], score: [score]}));
+        localStorage.setItem("JSQuizHighScores", JSON.stringify({initials:[initials], score:[score]}));
         location.assign ("highscores.html");
         return;
     }
     highScores = JSON.parse(highScores);
     highScores.initials.push(initials);
     highScores.score.push(score);
+    console.log(initials, score, highScores)
     localStorage.setItem("JSQuizHighScores", JSON.stringify(highScores));
     location.assign ("highscores.html");
 
@@ -105,6 +110,12 @@ var endQuiz = function() {
     sumbitIntitialsBtn.innerText = "Submit";
     sumbitIntitialsBtn.addEventListener("click", submitInitials);
     endingForm.appendChild(sumbitIntitialsBtn);
+    var retakeQuizBtn = document.createElement("button");
+    retakeQuizBtn.classList.add("submit-btn");
+    retakeQuizBtn.innerText = "Retake Quiz";
+    retakeQuizBtn.addEventListener("click", reloadQuiz);
+    endingForm.appendChild(retakeQuizBtn);
+
 };
 
 var checkAnswer = function(event) {
