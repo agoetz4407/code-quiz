@@ -7,11 +7,11 @@ var startButton = document.getElementById("start-quiz");
 var answerResult = document.createElement("div");
 answerResult.setAttribute("class", "answer-result");
 var questionCounter = 0;
-var timer = document.getElementById("timer");
 var startTime = 60;
 var time = startTime;
-var intervalId;
+var timer = document.getElementById("timer");
 timer.innerText = time;
+var intervalId;
 var questionArr = [
     {
         question: "Which one of the following is NOT a data type in Javascript?",
@@ -65,16 +65,69 @@ var questionArr = [
 
 //functions
 
+var saveScores = function() {
+
+};
+
+var submitInitials = function(event) {
+    event.preventDefault();
+    var initials = document.querySelector("input[name='initials']").value;
+    var score = time;
+    var highScores = localStorage.getItem("JSQuizHighScores");
+    if (!highScores) {
+        localStorage.setItem("JSQuizHighScores", JSON.stringify({initials: [initials], score: [score]}));
+        location.assign ("highscores.html");
+        return;
+    }
+    highScores = JSON.parse(highScores);
+    highScores.initials.push(initials);
+    highScores.score.push(score);
+    localStorage.setItem("JSQuizHighScores", JSON.stringify(highScores));
+    location.assign ("highscores.html");
+
+};
+
+var endQuiz = function() {
+    clearInterval(intervalId);
+    clearQuiz();
+    question.innerText = "All Done!";
+    var endingForm = document.createElement("p");
+    endingForm.innerHTML = `Your final score is ${time}<br>Enter initials `;
+    answers.appendChild(endingForm);
+    var intialsForm = document.createElement("input");
+    intialsForm.setAttribute("type", "text");
+    intialsForm.setAttribute("name", "initials");
+    intialsForm.setAttribute("placeholder", "Your Initials");
+    endingForm.appendChild(intialsForm);
+    var sumbitIntitialsBtn = document.createElement("button");
+    sumbitIntitialsBtn.setAttribute("type", "submit");
+    sumbitIntitialsBtn.classList.add("submit-btn");
+    sumbitIntitialsBtn.innerText = "Submit";
+    sumbitIntitialsBtn.addEventListener("click", submitInitials);
+    endingForm.appendChild(sumbitIntitialsBtn);
+};
+
 var checkAnswer = function(event) {
     var clickedAnswer = event.target.innerText;
     if (clickedAnswer === questionArr[questionCounter].correctAnswer) {
-        answerResult.innerText = "Correct!"
+        answerResult.innerText = "Correct!";
     }
     else {
-        answerResult.innerText = "Wrong!"
+        answerResult.innerText = "Wrong!";
+        time -= 15;
+        if (time <= 0) {
+            time = 0        
+            timer.innerText = time;
+            endQuiz();
+            return;
+        }
     }
     questionCounter++;
     clearQuiz();
+    if (questionArr.length <= questionCounter) {
+        endQuiz();
+        return;
+    }
     generateQuestion();
     footer.appendChild(answerResult);
 
@@ -108,24 +161,14 @@ var generateQuestion = function() {
 };
 
 
-var quizEnd = function() {
-    clearInterval(intervalId);
-
-    var playAgain = confirm("Would you like to try again?");
-    if (playAgain) {
-        window.location.reload();
-    };
-
-}
-
-var startQuiz = function(target) {
-    startButton.remove();
+var startQuiz = function(event) {
+    event.target.remove();
     quizWrapper.classList.remove("text-center");
     intervalId = setInterval(function() {
         time--
         timer.innerText = time
         if (time === 0) {
-            quizEnd();
+            endQuiz();
         }
     }, 1000);
     clearQuiz();
