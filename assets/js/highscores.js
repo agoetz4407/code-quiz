@@ -13,16 +13,10 @@ function getHighScores() {
     var initials = highScoresObj.initials;
     var scores = highScoresObj.score;
     for (var i = 0; i < initials.length; i++) {
-    var listing = document.createElement("div");
-    var listingCount = i + 1
-    listing.innerText = `${listingCount}) ${initials[i]} - ${scores[i]}`;
-    // var initialsListing = document.createElement("span");
-    // var scoreListing = document.createElement("span");
-    // initialsListing.innerText = initials[i];
-    // scoreListing.innerText = scores[i];
-    // listing.appendChild(initialsListing);
-    // listing.appendChild(scoreListing);
-    highScores.appendChild(listing);
+        var listing = document.createElement("div");
+        var listingCount = i + 1
+        listing.innerText = `${listingCount}) ${initials[i]} - ${scores[i]}`;
+        highScores.appendChild(listing);
     }
 
 }
