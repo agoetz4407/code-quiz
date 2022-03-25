@@ -79,14 +79,12 @@ var submitInitials = function(event) {
     var score = time;
     var highScores = localStorage.getItem("JSQuizHighScores");
     if (!highScores) {
-        localStorage.setItem("JSQuizHighScores", JSON.stringify({initials:[initials], score:[score]}));
+        localStorage.setItem("JSQuizHighScores", JSON.stringify([{initials:initials, score:score}]));
         location.assign ("highscores.html");
         return;
     }
     highScores = JSON.parse(highScores);
-    highScores.initials.push(initials);
-    highScores.score.push(score);
-    console.log(initials, score, highScores)
+    highScores.push({initials:initials, score: score});
     localStorage.setItem("JSQuizHighScores", JSON.stringify(highScores));
     location.assign ("highscores.html");
 
@@ -102,7 +100,7 @@ var endQuiz = function() {
     var intialsForm = document.createElement("input");
     intialsForm.setAttribute("type", "text");
     intialsForm.setAttribute("name", "initials");
-    intialsForm.setAttribute("placeholder", "Your Initials");
+    intialsForm.setAttribute("placeholder", "Your initials");
     endingForm.appendChild(intialsForm);
     var sumbitIntitialsBtn = document.createElement("button");
     sumbitIntitialsBtn.setAttribute("type", "submit");
