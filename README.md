@@ -11,5 +11,6 @@
 - from the high score page, the user can go back to take the quiz again and can also clear the high score list
 ---
 [Deployment Link](https://agoetz4407.github.io/code-quiz/)
+
 ---
-![Screenshot]
+![Screenshot](./assets/images/screenshot.png)
