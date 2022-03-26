@@ -25,9 +25,7 @@ header a {
 .content-wrapper {
     margin: 10vh auto;
     padding: 20px 20px;
-    border: 1px solid black;
     width: 60vw;
-    box-shadow: 0 0 10px 4px rgba(200, 200, 200, .2);
 }
 
 .question {
